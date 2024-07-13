@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main>
       <form action={action}>
-        <Button type="submit">Sign in</Button>
+        <Button type="submit">Login com Google</Button>
       </form>
     </main>
   );
