@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { auth, signOut } from "@/auth";
+import { ModeToggle } from "@/components/ModeToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
@@ -53,6 +54,10 @@ export default async function DashboardLayout({
           </Breadcrumb>
 
           <div className="ml-auto flex flex-1 items-center justify-end md:grow-0">
+            <ModeToggle />
+          </div>
+
+          <div className="flex items-center justify-end md:grow-0">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
