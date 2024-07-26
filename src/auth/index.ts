@@ -5,7 +5,7 @@ import Google from "next-auth/providers/google";
 import { db } from "@/db";
 import { accounts } from "@/db/schema/accounts";
 import { sessions } from "@/db/schema/sessions";
-import { Role, roleEnum, users } from "@/db/schema/users";
+import { Role, users } from "@/db/schema/users";
 import { verificationTokens } from "@/db/schema/verificationTokens";
 
 declare module "next-auth" {

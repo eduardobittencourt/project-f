@@ -1,46 +1,16 @@
-import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { auth, signOut } from "@/auth";
+
+import UserNameForm from "./components/UserNameForm";
 
 export default async function SettingsPage() {
   const session = await auth();
+  if (!session?.user?.id) return signOut();
 
   return (
     <div className="flex flex-col gap-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>Nome de apresentação</CardTitle>
-          <CardDescription>
-            Por favor insira seu nome completo, ou o nome de apresentação com o
-            qual você se sente confortável.
-          </CardDescription>
-        </CardHeader>
+      <UserNameForm defaultValue={session.user.name ?? ""} />
 
-        <CardContent>
-          <form className="w-full max-w-sm">
-            <Input
-              name="name"
-              type="text"
-              placeholder="Nome"
-              defaultValue={session?.user?.name ?? ""}
-            />
-          </form>
-        </CardContent>
-
-        <CardFooter className="flex justify-end border-t px-6 py-4">
-          <Button type="submit">Salvar</Button>
-        </CardFooter>
-      </Card>
-
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>CPF</CardTitle>
           <CardDescription>
@@ -50,7 +20,7 @@ export default async function SettingsPage() {
         </CardHeader>
 
         <CardContent>
-          <form className="w-full max-w-sm">
+          <form className="w-full max-w-sm" id="account-document">
             <Input
               name="document"
               type="text"
@@ -61,7 +31,9 @@ export default async function SettingsPage() {
         </CardContent>
 
         <CardFooter className="flex justify-end border-t px-6 py-4">
-          <Button type="submit">Salvar</Button>
+          <Button type="submit" form="account-document">
+            Salvar
+          </Button>
         </CardFooter>
       </Card>
 
@@ -107,7 +79,7 @@ export default async function SettingsPage() {
             Excluir pemanentemente a conta
           </Button>
         </CardFooter>
-      </Card>
+      </Card> */}
     </div>
   );
 }

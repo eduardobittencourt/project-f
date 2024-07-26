@@ -1,0 +1,1 @@
+ALTER TABLE "project_f_user" ALTER COLUMN "name" SET NOT NULL;
