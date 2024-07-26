@@ -1,5 +1,6 @@
 import { auth, signOut } from "@/auth";
 
+import UserDocumentForm from "./components/UserDocumentForm";
 import UserNameForm from "./components/UserNameForm";
 
 export default async function SettingsPage() {
@@ -10,32 +11,9 @@ export default async function SettingsPage() {
     <div className="flex flex-col gap-8">
       <UserNameForm defaultValue={session.user.name ?? ""} />
 
-      {/* <Card>
-        <CardHeader>
-          <CardTitle>CPF</CardTitle>
-          <CardDescription>
-            Seu CPF é importante para garantir que cada conta seja única e que
-            uma mesma pessoa não possua dois cadastros.
-          </CardDescription>
-        </CardHeader>
+      <UserDocumentForm defaultValue={session.user.document ?? ""} />
 
-        <CardContent>
-          <form className="w-full max-w-sm" id="account-document">
-            <Input
-              name="document"
-              type="text"
-              placeholder="CPF"
-              defaultValue={session?.user?.document ?? ""}
-            />
-          </form>
-        </CardContent>
-
-        <CardFooter className="flex justify-end border-t px-6 py-4">
-          <Button type="submit" form="account-document">
-            Salvar
-          </Button>
-        </CardFooter>
-      </Card>
+      {/* 
 
       <Card>
         <CardHeader>

@@ -37,3 +37,30 @@ export async function setAccountName(
     message: "Nome alterado com sucesso",
   };
 }
+
+export async function setAccountDocument(
+  _state: ActionStateProps,
+  formData: FormData,
+) {
+  const session = await auth();
+  if (!session?.user?.id) return signOut();
+
+  const updateSchema = insertUserSchema.pick({ document: true });
+  const result = updateSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success)
+    return {
+      message: "Erro ao realizar a alteração",
+    };
+
+  await db
+    .update(users)
+    .set({ document: result.data.document })
+    .where(eq(users.id, session.user.id));
+
+  revalidatePath("/api/auth");
+
+  return {
+    message: "CPF alterado com sucesso",
+  };
+}
