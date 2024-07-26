@@ -1,4 +1,4 @@
-import { Home, Package2, PanelLeft, Settings } from "lucide-react";
+import { Home, MapPin, Package2, PanelLeft, Settings } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,11 @@ const content = [
     url: "/dashboard",
     name: "Dashboard",
     Icon: () => <Home className="h-5 w-5" />,
+  },
+  {
+    url: "/dashboard/locations",
+    name: "Locais",
+    Icon: () => <MapPin className="h-5 w-5" />,
   },
 ] as const;
 

@@ -1,13 +1,22 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import NextAuth from "next-auth";
+import NextAuth, { DefaultSession } from "next-auth";
 import Google from "next-auth/providers/google";
 
 import { db } from "@/db";
 import { accounts } from "@/db/schema/accounts";
-import { authenticators } from "@/db/schema/authenticators";
 import { sessions } from "@/db/schema/sessions";
-import { users } from "@/db/schema/users";
+import { Role, roleEnum, users } from "@/db/schema/users";
 import { verificationTokens } from "@/db/schema/verificationTokens";
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      phone?: string;
+      document?: string;
+      role: Role;
+    } & DefaultSession["user"];
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db, {
@@ -15,7 +24,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     accountsTable: accounts,
     sessionsTable: sessions,
     verificationTokensTable: verificationTokens,
-    authenticatorsTable: authenticators,
   }),
   providers: [Google],
 });

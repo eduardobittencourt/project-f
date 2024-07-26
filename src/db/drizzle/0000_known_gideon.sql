@@ -1,5 +1,11 @@
+DO $$ BEGIN
+ CREATE TYPE "public"."role" AS ENUM('volunteer', 'admin');
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "project_f_account" (
-	"userId" text NOT NULL,
+	"userId" uuid NOT NULL,
 	"type" text NOT NULL,
 	"provider" text NOT NULL,
 	"providerAccountId" text NOT NULL,
@@ -13,31 +19,34 @@ CREATE TABLE IF NOT EXISTS "project_f_account" (
 	CONSTRAINT "project_f_account_provider_providerAccountId_pk" PRIMARY KEY("provider","providerAccountId")
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "project_f_authenticator" (
-	"credentialID" text NOT NULL,
-	"userId" text NOT NULL,
-	"providerAccountId" text NOT NULL,
-	"credentialPublicKey" text NOT NULL,
-	"counter" integer NOT NULL,
-	"credentialDeviceType" text NOT NULL,
-	"credentialBackedUp" boolean NOT NULL,
-	"transports" text,
-	CONSTRAINT "project_f_authenticator_userId_credentialID_pk" PRIMARY KEY("userId","credentialID"),
-	CONSTRAINT "project_f_authenticator_credentialID_unique" UNIQUE("credentialID")
+CREATE TABLE IF NOT EXISTS "project_f_location" (
+	"id" uuid PRIMARY KEY NOT NULL,
+	"name" text NOT NULL,
+	"street" text NOT NULL,
+	"number" text DEFAULT 'S/N' NOT NULL,
+	"additionalInfo" text,
+	"city" text NOT NULL,
+	"state" text NOT NULL,
+	"zipCode" text NOT NULL,
+	"createdAt" timestamp DEFAULT now() NOT NULL,
+	"userId" uuid
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "project_f_session" (
 	"sessionToken" text PRIMARY KEY NOT NULL,
-	"userId" text NOT NULL,
+	"userId" uuid NOT NULL,
 	"expires" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "project_f_user" (
-	"id" text PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"name" text,
 	"email" text NOT NULL,
 	"emailVerified" timestamp,
-	"image" text
+	"image" text,
+	"phone" text,
+	"document" text,
+	"role" "role"
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "project_f_verificationToken" (
@@ -54,7 +63,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "project_f_authenticator" ADD CONSTRAINT "project_f_authenticator_userId_project_f_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."project_f_user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "project_f_location" ADD CONSTRAINT "project_f_location_userId_project_f_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."project_f_user"("id") ON DELETE set null ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

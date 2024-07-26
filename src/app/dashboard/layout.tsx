@@ -79,6 +79,9 @@ export default async function DashboardLayout({
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>{session?.user?.name}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <Link href="/dashboard/settings">
+                  <DropdownMenuItem>Conta</DropdownMenuItem>
+                </Link>
                 <form action={logout}>
                   <DropdownMenuItem>
                     <button type="submit">Logout</button>
