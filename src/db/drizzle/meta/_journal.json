@@ -15,6 +15,13 @@
       "when": 1721997857267,
       "tag": "0001_silly_bishop",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1723047895132,
+      "tag": "0002_chilly_gravity",
+      "breakpoints": true
     }
   ]
 }

@@ -1,14 +1,7 @@
-import { pgEnum, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 
 import { pgTable } from "@/db/schema";
-
-export enum Role {
-  volunteer = "volunteer",
-  admin = "admin",
-}
-
-export const roleEnum = pgEnum("role", [Role.volunteer, Role.admin]);
 
 export const users = pgTable("user", {
   id: uuid("id").primaryKey(),
@@ -18,7 +11,6 @@ export const users = pgTable("user", {
   image: text("image"),
   phone: text("phone"),
   document: text("document"),
-  role: roleEnum("role"),
 });
 
 export const insertUserSchema = createInsertSchema(users);
