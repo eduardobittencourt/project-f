@@ -14,39 +14,38 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-import { setAccountDocument } from "../actions";
+import { setAccountPhone } from "../actions";
 
-type UserDocumentFormProps = {
+type UserPhoneForm = {
   defaultValue: string;
 };
 
-export default function UserDocumentForm({
+export default function UserPhoneForm({
   defaultValue,
-}: Readonly<UserDocumentFormProps>) {
-  const [state, action] = useFormState(setAccountDocument, { message: "" });
+}: Readonly<UserPhoneForm>) {
+  const [state, action] = useFormState(setAccountPhone, { message: "" });
 
   return (
     <form action={action}>
       <Card>
         <CardHeader>
-          <CardTitle>CPF</CardTitle>
+          <CardTitle>Telefone</CardTitle>
           <CardDescription>
-            Seu CPF é importante para garantir que cada conta seja única e que
-            uma mesma pessoa não possua dois cadastros.
+            Caso você desejar receber notificações pelo WhatsApp, cadastre seu
+            telefone de preferência.
           </CardDescription>
         </CardHeader>
 
         <CardContent className="w-full max-w-sm">
           <Input
-            name="document"
+            name="phone"
             type="text"
-            placeholder="CPF"
-            defaultValue={defaultValue}
-            ref={withMask("cpf", {
+            placeholder="Telefone"
+            ref={withMask("99 99999-9999", {
               removeMaskOnSubmit: true,
               showMaskOnHover: false,
             })}
-            required
+            defaultValue={defaultValue}
           />
         </CardContent>
 

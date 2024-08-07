@@ -1,7 +1,16 @@
 import { auth, signOut } from "@/auth";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import UserDocumentForm from "./components/UserDocumentForm";
 import UserNameForm from "./components/UserNameForm";
+import UserPhoneForm from "./components/UserPhoneForm";
 
 export default async function SettingsPage() {
   const session = await auth();
@@ -13,32 +22,7 @@ export default async function SettingsPage() {
 
       <UserDocumentForm defaultValue={session.user.document ?? ""} />
 
-      {/* 
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Telefone</CardTitle>
-          <CardDescription>
-            Caso você desejar receber notificações pelo WhatsApp, cadastre seu
-            telefone desejado.
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent>
-          <form className="w-full max-w-sm">
-            <Input
-              name="phone"
-              type="tel"
-              placeholder="Telefone"
-              defaultValue={session?.user?.phone ?? ""}
-            />
-          </form>
-        </CardContent>
-
-        <CardFooter className="flex justify-end border-t px-6 py-4">
-          <Button type="submit">Salvar</Button>
-        </CardFooter>
-      </Card>
+      <UserPhoneForm defaultValue={session.user.phone ?? ""} />
 
       <Card className="overflow-hidden border-destructive">
         <CardHeader>
@@ -57,7 +41,7 @@ export default async function SettingsPage() {
             Excluir pemanentemente a conta
           </Button>
         </CardFooter>
-      </Card> */}
+      </Card>
     </div>
   );
 }
